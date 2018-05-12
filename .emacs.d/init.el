@@ -47,6 +47,7 @@
 (defun prev-match () (interactive nil) (next-match -1))
 (global-set-key [(shift f3)] 'prev-match)
 (global-set-key (kbd "C-c TAB") 'auto-complete)
+(global-set-key (kbd "<f5>") 'redraw-display)
 
 ;; OCaml configuration
 ;;  - better error and backtrace matching
