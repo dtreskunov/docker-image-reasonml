@@ -1,0 +1,5 @@
+(global-set-key (kbd "<f3>") 'next-match)
+(defun prev-match () (interactive nil) (next-match -1))
+(global-set-key (kbd "<S-f3>") 'prev-match)
+(global-set-key (kbd "C-c TAB") 'auto-complete)
+;;(global-set-key (kbd "<f5>") 'redraw-display)

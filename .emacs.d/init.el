@@ -41,14 +41,6 @@
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-;; Some key bindings
-
-(global-set-key [f3] 'next-match)
-(defun prev-match () (interactive nil) (next-match -1))
-(global-set-key [(shift f3)] 'prev-match)
-(global-set-key (kbd "C-c TAB") 'auto-complete)
-(global-set-key (kbd "<f5>") 'redraw-display)
-
 ;; OCaml configuration
 ;;  - better error and backtrace matching
 
@@ -68,3 +60,5 @@
 
 (add-hook 'tuareg-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
 (load "~/.emacs.d/reason.el")
+(load "~/.emacs.d/fonts.el")
+(load "~/.emacs.d/keys.el")
