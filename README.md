@@ -19,6 +19,7 @@ The image contains:
     * [auto-complete](https://github.com/auto-complete/auto-complete) - 'nuff said
     * [company](https://github.com/company-mode/company-mode) - Modular in-buffer completion framework for Emacs
     * [utop](https://github.com/diml/utop) - universal toplevel (REPL aka shell) for OCaml/ReasonML
+    * ...here's a nice [demo](https://tuhdo.github.io/helm-projectile.html) of what Helm and Projectile can do
 
 ## Usage
 

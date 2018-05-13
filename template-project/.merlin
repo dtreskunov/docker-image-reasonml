@@ -1,0 +1,6 @@
+# https://github.com/ocaml/merlin/wiki/project-configuration
+S src/**
+
+PKG ounit
+
+B _build/src

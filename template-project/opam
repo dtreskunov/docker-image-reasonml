@@ -1,0 +1,5 @@
+# http://opam.ocaml.org/doc/Packaging.html
+
+opam-version: "1.2"
+version: "0.1"
+maintainer: "Name <email>"
