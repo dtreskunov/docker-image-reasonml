@@ -2,24 +2,20 @@
 
 After getting frustrated by [instructions](https://reasonml.github.io/docs/en/global-installation.html) on setting up [ReasonML](https://reasonml.github.io) on Windows, I decided to build a Docker image that would provide a sane working environment for coding in ReasonML.
 
-This image uses the "alternative" installation method mentioned in ReasonML docs (OPAM).
+This image uses the preferred installation method mentioned in ReasonML docs (`npm`). It is based on the `node:latest` Debian-based image. Using Alpine was problematic because [esy-installer](https://github.com/esy-ocaml/esy-installer) contains a prebuilt binary which is dynamically linked against `libc`. Alpine implements its own version of `libc` called `musl`, which is incompatible with `esy-installer`. Using `libc6-compat` was no help.
 
 The image contains:
-* [OCaml](https://ocaml.org) - strongly-typed functional language
-* [ReasonML](https://reasonml.github.io/) - syntax sugar for OCaml making it JavaScript-like
-* [OPAM](https://opam.ocaml.org) - package manager for OCaml
-* [Emacs](https://www.gnu.org/software/emacs/) - ~~text editor~~ operating system
-* ...and various tools:
-    * [merlin](https://github.com/ocaml/merlin) - context sensitive completion for OCaml in Vim and Emacs
-    * [ocp-indent](https://github.com/OCamlPro/ocp-indent) - indentation tool for OCaml, to be used from editors like Emacs and Vim
-    * [tuareg](https://github.com/ocaml/tuareg) - Emacs OCaml mode
-* ...as well as Emacs plugins:
+* [Esy](https://esy.sh/) - simple workflow for native Reason and OCaml
+* [Emacs](https://www.gnu.org/software/emacs/) - ~~text editor~~ operating system with curated plugins:
     * [helm](https://github.com/emacs-helm/helm) - incremental completion and selection narrowing framework
     * [projectile](https://github.com/bbatsov/projectile) - Project Interaction Library for Emacs
     * [auto-complete](https://github.com/auto-complete/auto-complete) - 'nuff said
     * [company](https://github.com/company-mode/company-mode) - Modular in-buffer completion framework for Emacs
     * [utop](https://github.com/diml/utop) - universal toplevel (REPL aka shell) for OCaml/ReasonML
     * ...here's a nice [demo](https://tuhdo.github.io/helm-projectile.html) of what Helm and Projectile can do
+* Two sample projects installed into `~/templates`:
+    * [esy-ocaml-project](https://github.com/esy-ocaml/esy-ocaml-project) - project which demonstrates an OCaml workflow with Esy
+    * [esy-reason-project](https://github.com/esy-ocaml/esy-reason-project) - project which demonstrates a Reason workflow with Esy
 
 ## Usage
 

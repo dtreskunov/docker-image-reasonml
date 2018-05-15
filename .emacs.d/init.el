@@ -28,7 +28,24 @@
 
 (use-package projectile
   :ensure t
-  :config (projectile-global-mode))
+  :config
+  (defun maybe-config-esy ()
+    (let ((project-root (ignore-errors (projectile-project-root))))
+      (message (concat "maybe-config-esy: project-root=" project-root))
+      (when (and project-root
+                 (file-exists-p (concat project-root "package.json")))
+        (message "maybe-config-esy: detected package.json in project-root")
+        (let* ((default-directory project-root)
+               (env-lines (shell-cmd "esy" "env"))
+               (path-str (car (shell-cmd "esy" "sh" "-c" "echo $PATH"))))
+          (when env-lines
+            (message "maybe-config-esy: setting `process-environment`")
+            (setq process-environment env-lines))
+          (when path-str
+            (message "maybe-config-esy: setting `exec-path`")
+            (setq exec-path (parse-colon-path path-str)))))))
+  (projectile-global-mode)
+  (add-hook 'projectile-after-switch-project-hook 'maybe-config-esy))
 
 (use-package helm-projectile
   :ensure t
@@ -78,22 +95,7 @@
 (use-package merlin
   :ensure t
   :config
-  (setq merlin-ac-setup t)
-
-  (defun shell-cmd (cmd)
-    "Returns the stdout output of a shell command or nil if the command returned an error"
-    (car (ignore-errors (apply 'process-lines (split-string cmd)))))
-
-  (let* ((refmt-bin (shell-cmd "which refmt"))
-         (merlin-bin (shell-cmd "which ocamlmerlin"))
-         (merlin-base-dir (when merlin-bin
-                            (replace-regexp-in-string "bin/ocamlmerlin$" "" merlin-bin))))
-    ;; Add npm merlin.el to the emacs load path and tell emacs where to find ocamlmerlin
-    (when merlin-bin
-      (add-to-list 'load-path (concat merlin-base-dir "share/emacs/site-lisp/"))
-      (setq merlin-command merlin-bin))
-    (when refmt-bin
-      (setq refmt-command refmt-bin))))
+  (setq merlin-ac-setup t))
 
 (use-package reason-mode
   :ensure t
@@ -127,6 +129,7 @@
  '(electric-indent-mode t)
  '(indent-tabs-mode nil)
  '(line-move-visual t)
+ '(merlin-command "ocamlmerlin")
  '(next-error-highlight t)
  '(next-error-highlight-no-select t)
  '(next-line-add-newlines nil)
@@ -147,4 +150,4 @@
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-(projectile-add-known-project "/template-project")
+(projectile-add-known-project "~/templates/esy-reason-project")
