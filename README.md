@@ -1,8 +1,10 @@
-# ReasonML Docker Image
+# ReasonML Docker Image for Development
 
 After getting frustrated by [instructions](https://reasonml.github.io/docs/en/global-installation.html) on setting up [ReasonML](https://reasonml.github.io) on Windows, I decided to build a Docker image that would provide a sane working environment for coding in ReasonML.
 
-This image uses the "alternative" installation method mentioned in ReasonML docs (OPAM).
+---
+
+## Image Contents
 
 The image contains:
 * [OCaml](https://ocaml.org) - strongly-typed functional language
@@ -14,6 +16,7 @@ The image contains:
     * [ocp-indent](https://github.com/OCamlPro/ocp-indent) - indentation tool for OCaml, to be used from editors like Emacs and Vim
     * [tuareg](https://github.com/ocaml/tuareg) - Emacs OCaml mode
 * ...as well as Emacs plugins:
+    * [magit]() - Git ~~GUI~~ porcelain
     * [helm](https://github.com/emacs-helm/helm) - incremental completion and selection narrowing framework
     * [projectile](https://github.com/bbatsov/projectile) - Project Interaction Library for Emacs
     * [auto-complete](https://github.com/auto-complete/auto-complete) - 'nuff said
@@ -29,10 +32,10 @@ docker run --rm -it dtreskunov/reasonml emacs
 ```
 
 ### Work on your project's source code
-This will mount the source you have (on the Docker host) as the `/src` directory in the container. Unfortunately, this doesn't seem to work when using [docker-machine](https://docs.docker.com/machine/) on Windows.
+This will mount the source you have (on the Docker host) as the `/project` directory in the container. On Windows, `<path-to-project>` should be of the form `/c/users/...`.
 
 ```
-docker run --rm -it -v /<path-to-project>:/src -w /src dtreskunov/reasonml emacs .
+docker run --rm -it -v /<path-to-project>:/src -w /project dtreskunov/reasonml emacs .
 ```
 
 ### Emacs GUI via X Server
@@ -42,3 +45,21 @@ docker run --rm -it -v /<path-to-project>:/src -w /src dtreskunov/reasonml emacs
 ```
 docker run --rm -it --net=host dtreskunov/reasonml emacs -d 192.168.1.100:0
 ```
+
+## Workflow
+
+This image uses the "alternative" installation method mentioned in ReasonML docs (OPAM). It supports the following workflow for setting up a new project:
+
+1. Mount an empty host directory inside the container (say, `/project`) (see below)
+2. Duplicate the layout from `/template-project`:
+    * `src/*` - put your source files (OCaml or ReasonML) here
+    * `src/jbuild` - instructions for jbuilder (see [here](https://jbuilder.readthedocs.io/en/latest/jbuild.html))
+    * `<project-name>.opam` - instructions for OPAM (see [here](https://opam.ocaml.org/doc/Packaging.html) and [here](https://opam.ocaml.org/doc/Manual.html#opam))
+3. Run `opam pin add <project-name> /project --no-action` to tell OPAM that `<project-name>` is installed locally in this location
+4. Run `opam depext --install <project-name>` to tell OPAM to install dependencies, compile, and install the project
+5. Make changes to the source code
+6. To recompile:
+    * Run `opam upgrade <project-name>` - installs build artifacts into `~/.opam/4.05.0`
+    * or run `jbuilder build @install` - puts artifacts into `_build/install/default`, which is used by the Merlin Emacs plugin
+
+See [here](https://stackoverflow.com/a/28810997) for an explanation of this workflow.

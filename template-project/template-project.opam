@@ -1,0 +1,12 @@
+opam-version: "1.2"
+version: "0.1"
+authors: "Sponge Bob"
+homepage: "sponge.com/bob"
+maintainer: "bob@sponge.com"
+build: [
+  ["jbuilder" "build" "@install"]
+]
+depends: [
+  "core" {= "v0.10.0"}
+  "reason" {build}
+]

@@ -46,6 +46,9 @@
 (use-package iedit
   :ensure t)
 
+(use-package magit
+  :ensure t)
+
 (use-package auto-complete
   :ensure t
   :config
