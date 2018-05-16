@@ -108,6 +108,14 @@
   :load-path "~/.emacs.d/vendor/merlin-eldoc/"
   :hook ((reason-mode tuareg-mode caml-mode) . merlin-eldoc-setup))
 
+(use-package solarized-theme
+  :ensure t
+  :config
+  (setq solarized-high-contrast-mode-line t)
+  (setq x-underline-at-descent-line t)
+  (setq solarized-use-variable-pitch nil)
+  (load-theme 'solarized-dark t))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -142,6 +150,8 @@
     (projectile which-key try use-package utop tuareg reason-mode merlin helm-projectile company auto-complete)))
  '(require-final-newline t)
  '(sentence-end-double-space nil)
+ '(scroll-conservatively 10000)
+ '(scroll-error-top-bottom t)
  '(show-paren-mode t)
  '(show-trailing-whitespace t)
  '(visible-bell t))
