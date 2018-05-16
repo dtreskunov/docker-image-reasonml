@@ -1,5 +1,5 @@
 #dtreskunov/reasonml:local
-FROM ocaml/opam:alpine
+FROM ocaml/opam:alpine_ocaml-4.06.0_flambda
 
 ENV OPAMYES=true
 
