@@ -24,6 +24,9 @@ RUN opam install user-setup
 RUN opam install tuareg
 COPY .emacs.d .emacs.d
 RUN sudo chown -R opam:nogroup .emacs.d
+RUN mkdir -p .emacs.d/vendor && \
+    cd .emacs.d/vendor && \
+    git clone --quiet https://github.com/Khady/merlin-eldoc.git
 RUN opam user-setup install
 RUN emacs --script .emacs.d/init.el
 

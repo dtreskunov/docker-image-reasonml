@@ -104,6 +104,10 @@
                                         (add-hook 'before-save-hook 'refmt-before-save)
                                         (merlin-mode))))
 
+(use-package merlin-eldoc
+  :load-path "~/.emacs.d/vendor/merlin-eldoc/"
+  :hook ((reason-mode tuareg-mode caml-mode) . merlin-eldoc-setup))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
