@@ -116,6 +116,10 @@
   (setq solarized-use-variable-pitch nil)
   (load-theme 'solarized-dark t))
 
+(use-package undo-tree
+  :ensure t
+  :config (global-undo-tree-mode))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
