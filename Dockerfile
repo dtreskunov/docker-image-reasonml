@@ -8,6 +8,7 @@ RUN sudo apk add m4
 WORKDIR /home/opam/opam-repository
 RUN git pull --quiet
 RUN opam update
+RUN opam upgrade
 
 # Template project
 COPY template-project /template-project
