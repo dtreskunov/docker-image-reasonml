@@ -125,7 +125,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Noto Mono"))))
+ '(default ((t (:family "Source Code Pro"))))
  '(markdown-blockquote-face ((t (:inherit nil))))
  '(markdown-code-face ((t (:inherit nil))))
  '(markdown-inline-code-face ((t (:inherit nil))))
@@ -167,5 +167,11 @@
   (ansi-color-apply-on-region (point-min) (point-max))
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+;; https://stackoverflow.com/questions/6820051/unicode-characters-in-emacs-term-mode
+(defadvice ansi-term (after advise-ansi-term-coding-system)
+  (setq show-trailing-whitespace nil)
+  (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
+(ad-activate 'ansi-term)
 
 (projectile-add-known-project "/template-project")

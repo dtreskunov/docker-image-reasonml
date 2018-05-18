@@ -18,7 +18,7 @@ RUN opam depext --install template-project
 
 # Emacs goodies
 WORKDIR /home/opam
-RUN sudo apk add diffutils font-noto the_silver_searcher emacs-gtk2
+RUN sudo apk add diffutils the_silver_searcher emacs-gtk2
 RUN opam install merlin
 RUN opam install ocp-indent
 RUN opam install user-setup
@@ -30,6 +30,10 @@ RUN mkdir -p .emacs.d/vendor && \
     git clone --quiet https://github.com/Khady/merlin-eldoc.git
 RUN opam user-setup install
 RUN emacs --script .emacs.d/init.el
+
+# Install Source Code Pro font
+RUN sudo git clone --depth 1 --branch release https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/source-code-pro && \
+    sudo fc-cache -f -v
 
 WORKDIR /template-project
 ENV OPAMYES=
